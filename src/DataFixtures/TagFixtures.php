@@ -19,9 +19,9 @@ class TagFixtures extends Fixture
             $t = new Tag();
             $t->setNom($tag);
 
-            $manager->persist($t);
+            $manager->persist($t); // correspond à INSERT INTO tag (nom) VALUES ("php"), INSERT INTO tag (nom) VALUES ("javascript")
         }
 
-        $manager->flush();
+        $manager->flush(); // correspond à save() dans Laravel
     }
 }
