@@ -3,12 +3,38 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword) }}
+                <h1 class="col-10">Inscription</h1>
 
-        <button class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+
+                {{ form_start(registrationForm) }}
+                {# Cette fonction génère automatiquement tous les champs nécessaires#}
+                {#    {{ form_row(registrationForm) }}#}
+
+                {{ form_row(registrationForm.prenom) }}
+                {{ form_row(registrationForm.nom) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.github) }}
+                {{ form_row(registrationForm.bio) }}
+                {{ form_row(registrationForm.plainPassword) }}
+
+
+                <button class="btn btn-outline-primary">S'enregistrer</button>
+                {{ form_end(registrationForm) }}
+
+            </div>
+            <div class="col-4">
+                <img src="{{ asset('img/padawan.jpg') }}" alt="Padawan" class="img-fluid">
+                <a href="{{ path('app_login') }}" class="btn btn-block btn-dark">Déjà un Padawan ? <br> Identifiez-vous !</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
 {% endblock %}
