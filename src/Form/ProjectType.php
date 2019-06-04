@@ -14,12 +14,12 @@ class ProjectType extends AbstractType
         $builder
             ->add('nom')
             ->add('description')
-            ->add('isOnline')
-            ->add('createdAt')
-            ->add('updatedAt')
+           // ->add('isOnline')
+           // ->add('createdAt')
+           // ->add('updatedAt')
             ->add('tags')
             ->add('category')
-            ->add('ProposePar')
+           // ->add('ProposePar')
         ;
     }
 

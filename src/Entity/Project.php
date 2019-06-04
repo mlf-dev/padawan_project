@@ -63,6 +63,9 @@ class Project
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->setCreatedAt(new \DateTime);
+        $this->setUpdatedAt(new \DateTime);
+        $this->setIsOnline(true);
     }
 
     public function getId(): ?int
