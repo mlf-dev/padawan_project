@@ -54,6 +54,12 @@ class Project
      */
     private $category;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="projects")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ProposePar;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -158,6 +164,18 @@ class Project
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getProposePar(): ?User
+    {
+        return $this->ProposePar;
+    }
+
+    public function setProposePar(?User $ProposePar): self
+    {
+        $this->ProposePar = $ProposePar;
 
         return $this;
     }

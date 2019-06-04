@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -71,12 +73,18 @@ class User implements UserInterface
      */
     private $avatarGithub;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="ProposePar", orphanRemoval=true)
+     */
+    private $projects;
+
 
     // CONSTRUCTEUR
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
+        $this->projects = new ArrayCollection();
     }
 
 
@@ -239,6 +247,37 @@ class User implements UserInterface
     public function setAvatarGithub(?string $avatarGithub): self
     {
         $this->avatarGithub = $avatarGithub;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Project[]
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    public function addProject(Project $project): self
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects[] = $project;
+            $project->setProposePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Project $project): self
+    {
+        if ($this->projects->contains($project)) {
+            $this->projects->removeElement($project);
+            // set the owning side to null (unless already changed)
+            if ($project->getProposePar() === $this) {
+                $project->setProposePar(null);
+            }
+        }
 
         return $this;
     }
