@@ -6,6 +6,8 @@ use App\Entity\Project;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+
 
 class ProjectType extends AbstractType
 {
@@ -14,6 +16,7 @@ class ProjectType extends AbstractType
         $builder
             ->add('nom')
             ->add('description')
+            ->add('imageFile',VichFileType::class)
            // ->add('isOnline')
            // ->add('createdAt')
            // ->add('updatedAt')
