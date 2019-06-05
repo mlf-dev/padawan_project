@@ -22,11 +22,11 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Déposer un projet <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ path('project_add') }}">Déposer un projet <span class="sr-only">(current)</span></a>
             </li>
             {% if app.user == false %}
             <li class="nav-item active">
-                <a class="nav-link" href="#">Devenir un Padawan</a>
+                <a class="nav-link" href="{{ path('app_register') }}">Devenir un Padawan</a>
             </li>
             {% endif %}
             <li class="nav-item active">
@@ -34,9 +34,13 @@
             </li>
         </ul>
         <div class="text-right">
-            <p class="badge-light badge">Bienvenue {% if app.user %} {{ app.user.prenom }} {{ app.user.nom }} {% endif %}</p>
+            <p class="badge-light badge">Bienvenue {% if app.user %} {{ app.user.prenom }} {{ app.user.nom }}
+                <a href="{{ path('app_logout') }}">Se déconnecter</a>
+             {% endif %}
+            </p>
         </div>
     </div>
+
 </nav>
 
 {% include('layouts/flash.html.twig') %}
