@@ -27,6 +27,7 @@ class ProjectController extends AbstractController
         // création de l'objet à persister dans la db
         $project = new Project();
         // création de l'objet form qui va générer le html dans la vue et prendre en charge la validation du formulaire et hydratation de l'objet $project avec les données de la saisie dans le formulaire
+        $project->setProposePar($this->getUser());
         // création de l'objet form
         $form = $this->createForm(ProjectType::class, $project);
         // hydratation de l'objet avec les datas du formulaire (objet request)
@@ -37,7 +38,6 @@ class ProjectController extends AbstractController
             // récupérer l'entity manager de Doctrine (ORM)
             $em = $this->getDoctrine()->getManager();
             // association du user loggé et du projet qu'il est en train de créer
-            $project->setProposePar($this->getUser());
             // enregsitrer dans la db des datas de form (équivalant de save() dans laravel
             $em->persist($project);
             $em->flush();
