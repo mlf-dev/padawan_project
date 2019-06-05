@@ -4,20 +4,31 @@ namespace App\Controller;
 
 use App\Entity\Project;
 use App\Form\ProjectType;
+use App\Repository\ProjectRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProjectController extends AbstractController
 {
+
+    private $projectRepository;
+
+    public function __construct(ProjectRepository $projectRepository)
+    {
+        $this->projectRepository = $projectRepository;
+    }
+
     /**
-     * @Route("/project", name="project")
+     * @Template()
+     * @Route("/projects", name="projects")
      */
     public function index()
     {
-        return $this->render('project/index.html.twig', [
-            'controller_name' => 'ProjectController',
-        ]);
+        // SELECT * FROM projects
+        $projects = $this->projectRepository->findAll();
+        return ['projects'=>$projects];
     }
 
     /**
@@ -49,6 +60,7 @@ class ProjectController extends AbstractController
                 $this->addFlash('error','extension non autorisée');
                 return $this->redirectToRoute('project_add');
             }
+
             // associer le nom de l'image au projet
             $project->setImageName($fichier_name->getClientOriginalName());
 
@@ -61,11 +73,24 @@ class ProjectController extends AbstractController
             // ajouter un message flash dans la session
             $this->addFlash('success','Merci ! Votre projet a été proposé au Maitre Jedi');
             // return redireciton vers page de confirmation de création du projet
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('project_show');
         }
 
 
         // affichage de la vue
         return $this->render('project/add.html.twig', ['form'=>$form->createView()]);
+    }
+
+    /**
+     * @Template()
+     * @Route("/project/{id}", name="project_show")
+     */
+    public function show(Request $request){
+        // return $this->render('project/show.html.twig'); -> remplacé par @Template, car tous les fichiers on été bien nommés
+        // on récupère l'id dans l'url
+        $project = $this->projectRepository->find($request->get('id'));
+
+        return ['project'=>$project];
+
     }
 }

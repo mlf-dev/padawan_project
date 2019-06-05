@@ -4,6 +4,7 @@
 
     <div class="container">
         <div class="row">
+            {% if app.user %}
             <div class="col-12">
                 <h4>Proposez un projet au maître Jedi</h4>
                 {{ form_start(form) }}
@@ -12,6 +13,13 @@
                 <button class="btn btn-primary">Proposer un projet</button>
                 {{ form_end(form) }}
             </div>
+                {% else %}
+                <div class="col-8 offset-2 text-center">
+                    <h4>Vous devez être identifié pour proposer un projet au Maître Jedi</h4>
+                    <img src="{{ asset('img/padawan.jpg') }}" alt="Padawan Project" class="img-fluid" width="40%">
+                    <a class="btn btn-block btn-dark" href="{{ path('app_login') }}">Se connecter</a>
+                </div>
+            {% endif %}
         </div>
     </div>
 
