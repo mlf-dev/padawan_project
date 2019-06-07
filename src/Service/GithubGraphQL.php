@@ -23,7 +23,7 @@ query GetUser($user: String!) {
 }
 GRAPHQL;
 
-        $datas = $this->graphql_query('https://api.github.com/graphql', $query, ['user' => $login], '61d1ff4e3bf6e7940263bedd60e9c43cd8f7feb0');
+        $datas = $this->graphql_query('https://api.github.com/graphql', $query, ['user' => $login], 'af371c0fcf1f769dc6f84150862f72733af97674');
 
         return $datas;
 

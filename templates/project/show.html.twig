@@ -29,7 +29,6 @@
                     </div>
                     <div class="col-4 text-center">
                         <img class="img-fluid" src="{{ vich_uploader_asset(project,'imageFile') }}" alt="{{ project.nom }}">
-
                     </div>
                 </div>
                 <div class="row">
@@ -39,21 +38,15 @@
                     </div>
                 </div>
                 <div class="row text-center">
-                    <div class="col-lg-1">
-                        <img class="img-fluid rounded-circle" src="img/charlie-ico.jpg" alt="">
-                        <h6>Charlie</h6>
-                        <p><a class="btn btn-outline-info btn-sm" href="#" role="button">Github</a></p>
-                    </div><!-- /.col-lg-4 -->
-                    <div class="col-lg-1">
-                        <img class="img-fluid rounded-circle" src="img/fanch-ico.jpg" alt="">
-                        <h6>Charlie</h6>
-                        <p><a class="btn btn-outline-info btn-sm" href="#" role="button">Github</a></p>
-                    </div><!-- /.col-lg-4 -->
-                    <div class="col-lg-1">
-                        <img class="img-fluid rounded-circle" src="img/marie-ico.jpg" alt="">
-                        <h6>Marie</h6>
-                        <p><a class="btn btn-outline-info btn-sm" href="#" role="button">Github</a></p>
-                    </div><!-- /.col-lg-4 -->
+                    {# project.participant équivaut à project->getParticipants()#}
+                    {% for participant in project.participants %}
+                        <div class="col-lg-1">
+                            {# pas besoin d'asset dans l'image qui suit puisque c'est une url absolue et non relative #}
+                            <img class="img-fluid rounded-circle" src="{{ participant.padawan.avatarGithub }}" alt="">
+                            <p><a class="btn btn-outline-info btn-sm" href="{{ path('padawan_profile',{'id':participant.padawan.id}) }}" role="button">{{ participant.padawan.prenom }}</a></p>
+                        </div><!-- /.col-lg-4 -->
+                    {% endfor %}
+
                 </div>
 
             </div>
