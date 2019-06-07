@@ -15,7 +15,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-navbar-padawan fixed-top">
-    <a class="navbar-brand" href="#">PADAWAN PROJECT</a>
+    <a class="navbar-brand" href="{{ path('home') }}">PADAWAN PROJECT</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -30,12 +30,14 @@
             </li>
             {% endif %}
             <li class="nav-item active">
-                <a class="nav-link" href="projets.html">Voir les derniers projets</a>
+                <a class="nav-link" href="{{ path('projects') }}">Voir les derniers projets</a>
             </li>
         </ul>
         <div class="text-right">
-            <p class="badge-light badge">Bienvenue {% if app.user %} {{ app.user.prenom }} {{ app.user.nom }}
+            <p class="badge-light badge">{% if app.user %}Bienvenue {{ app.user.prenom }} {{ app.user.nom }}
                 <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}">Mon compte</a>
              {% endif %}
             </p>
         </div>

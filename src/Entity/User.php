@@ -78,6 +78,11 @@ class User implements UserInterface
      */
     private $projects;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Participant", mappedBy="padawan", orphanRemoval=true)
+     */
+    private $participations;
+
 
     // CONSTRUCTEUR
     public function __construct()
@@ -85,6 +90,7 @@ class User implements UserInterface
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
         $this->projects = new ArrayCollection();
+        $this->participations = new ArrayCollection();
     }
 
 
@@ -276,6 +282,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($project->getProposePar() === $this) {
                 $project->setProposePar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Participant[]
+     */
+    public function getParticipations(): Collection
+    {
+        return $this->participations;
+    }
+
+    public function addParticipation(Participant $participation): self
+    {
+        if (!$this->participations->contains($participation)) {
+            $this->participations[] = $participation;
+            $participation->setPadawan($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipation(Participant $participation): self
+    {
+        if ($this->participations->contains($participation)) {
+            $this->participations->removeElement($participation);
+            // set the owning side to null (unless already changed)
+            if ($participation->getPadawan() === $this) {
+                $participation->setPadawan(null);
             }
         }
 

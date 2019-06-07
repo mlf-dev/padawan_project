@@ -80,12 +80,18 @@ class Project
      */
     private $imageName;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Participant", mappedBy="project", orphanRemoval=true)
+     */
+    private $participants;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->setCreatedAt(new \DateTime);
         $this->setUpdatedAt(new \DateTime);
         $this->setIsOnline(true);
+        $this->participants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -236,5 +242,36 @@ class Project
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    /**
+     * @return Collection|Participant[]
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(Participant $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+            $participant->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(Participant $participant): self
+    {
+        if ($this->participants->contains($participant)) {
+            $this->participants->removeElement($participant);
+            // set the owning side to null (unless already changed)
+            if ($participant->getProject() === $this) {
+                $participant->setProject(null);
+            }
+        }
+
+        return $this;
     }
 }

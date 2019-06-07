@@ -14,6 +14,18 @@
 
                         {{ project.description }}
 
+                        {% if(app.user) %}
+                            <div class="text-left jumbotron">
+                                <strong>Vous voulez parrticiper à ce projet ?</strong>
+                                {{ form_start(form) }}
+                                {{ form_row(form.githubRepository) }}
+                                <button class="btn btn-primary btn-sm">Je me lance</button>
+                                {{ form_end(form) }}
+                            </div>
+                        {% else %}
+                            <a href="{{ path('app_login') }}">Connectez-vous pour participer à ce projet</a>
+                        {% endif %}
+
                     </div>
                     <div class="col-4 text-center">
                         <img class="img-fluid" src="{{ vich_uploader_asset(project,'imageFile') }}" alt="{{ project.nom }}">
